@@ -1,0 +1,116 @@
+{
+    "id": "711520d2-6e92-e166-e2ad-ce28237ad63a",
+    "topic": "/SUBSCRIPTIONS/34F6FEF4-3E58-475F-AD6B-E591C8C55BBF/RESOURCEGROUPS/AZURE-IOT-RG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/DANHELLEM-IOT-HUB",
+    "subject": "devices/DevKit-1",
+    "eventType": "Microsoft.Devices.DeviceTelemetry",
+    "data": {
+        "properties": {
+            "temperatureAlert": "false"
+        },
+        "systemProperties": {
+            "iothub-connection-device-id": "DevKit-1",
+            "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "iothub-connection-auth-generation-id": "637425164739968854",
+            "iothub-enqueuedtime": "2020-12-08T14:55:56.4630000Z",
+            "iothub-message-source": "Telemetry"
+        },
+        "body": "ewogICAgIm1lc3NhZ2VJZCI6IDEzMjgzLAogICAgImh1bWlkaXR5IjogNDIKfQ=="
+    },
+    "dataVersion": "",
+    "metadataVersion": "1",
+    "eventTime": "2020-12-08T14:55:56.463Z"
+}
+
+
+{
+    "id": "f658edb9-3fb5-0889-69c3-c71d23d9aaaf",
+    "topic": "/SUBSCRIPTIONS/34F6FEF4-3E58-475F-AD6B-E591C8C55BBF/RESOURCEGROUPS/AZURE-IOT-RG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/DANHELLEM-IOT-HUB",
+    "subject": "devices/DevKit-1",
+    "eventType": "Microsoft.Devices.DeviceTelemetry",
+    "data": {
+        "properties": {
+            "temperatureAlert": "false"
+        },
+        "systemProperties": {
+            "iothub-connection-device-id": "DevKit-1",
+            "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "iothub-connection-auth-generation-id": "637425164739968854",
+            "iothub-enqueuedtime": "2020-12-08T14:56:07.9960000Z",
+            "iothub-message-source": "Telemetry"
+        },
+        "body": "ewogICAgIm1lc3NhZ2VJZCI6IDEzMjg1Cn0="
+    },
+    "dataVersion": "",
+    "metadataVersion": "1",
+    "eventTime": "2020-12-08T14:56:07.996Z"
+}
+
+{
+    "id": "a13a7d32-c3f8-9ad8-8575-7db8ea1097f7",
+    "topic": "/SUBSCRIPTIONS/34F6FEF4-3E58-475F-AD6B-E591C8C55BBF/RESOURCEGROUPS/AZURE-IOT-RG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/DANHELLEM-IOT-HUB",
+    "subject": "devices/DevKit-1",
+    "eventType": "Microsoft.Devices.DeviceTelemetry",
+    "data": {
+        "properties": {
+            "temperatureAlert": "false"
+        },
+        "systemProperties": {
+            "iothub-connection-device-id": "DevKit-1",
+            "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "iothub-connection-auth-generation-id": "637425164739968854",
+            "iothub-enqueuedtime": "2020-12-08T14:56:54.1240000Z",
+            "iothub-message-source": "Telemetry"
+        },
+        "body": "ewogICAgIm1lc3NhZ2VJZCI6IDEzMjkzLAogICAgInRlbXBlcmF0dXJlIjogMjEuMzk5OTk5NjE4NTMwMjczLAogICAgImh1bWlkaXR5IjogNDIKfQ=="
+    },
+    "dataVersion": "",
+    "metadataVersion": "1",
+    "eventTime": "2020-12-08T14:56:54.124Z"
+}
+
+
+{
+    "id": "c1d9592c-47ad-4abc-55f6-27433f87b00c",
+    "topic": "/SUBSCRIPTIONS/34F6FEF4-3E58-475F-AD6B-E591C8C55BBF/RESOURCEGROUPS/AZURE-IOT-RG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/DANHELLEM-IOT-HUB",
+    "subject": "devices/DevKit-2",
+    "eventType": "Microsoft.Devices.DeviceTelemetry",
+    "data": {
+        "properties": {
+            "temperatureAlert": "false"
+        },
+        "systemProperties": {
+            "iothub-connection-device-id": "DevKit-2",
+            "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "iothub-connection-auth-generation-id": "637425166203685489",
+            "iothub-enqueuedtime": "2020-12-08T14:56:50.1290000Z",
+            "iothub-message-source": "Telemetry"
+        },
+        "body": "ewogICAgIm1lc3NhZ2VJZCI6IDEzMjY5LAogICAgImh1bWlkaXR5IjogMzcuNDAwMDAxNTI1ODc4OTA2Cn0="
+    },
+    "dataVersion": "",
+    "metadataVersion": "1",
+    "eventTime": "2020-12-08T14:56:50.129Z"
+}
+
+{
+    "id": "3835835e-d0cf-4e52-1564-d79233d9e0ae",
+    "topic": "/SUBSCRIPTIONS/34F6FEF4-3E58-475F-AD6B-E591C8C55BBF/RESOURCEGROUPS/AZURE-IOT-RG/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/DANHELLEM-IOT-HUB",
+    "subject": "devices/DevKit-2",
+    "eventType": "Microsoft.Devices.DeviceTelemetry",
+    "data": {
+        "properties": {
+            "temperatureAlert": "false"
+        },
+        "systemProperties": {
+            "iothub-connection-device-id": "DevKit-2",
+            "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "iothub-connection-auth-generation-id": "637425166203685489",
+            "iothub-enqueuedtime": "2020-12-08T14:56:27.0820000Z",
+            "iothub-message-source": "Telemetry"
+        },
+        "body": "ewogICAgIm1lc3NhZ2VJZCI6IDEzMjY1LAogICAgInRlbXBlcmF0dXJlIjogMjMsCiAgICAiaHVtaWRpdHkiOiAzNy41Cn0="
+    },
+    "dataVersion": "",
+    "metadataVersion": "1",
+    "eventTime": "2020-12-08T14:56:27.082Z"
+}

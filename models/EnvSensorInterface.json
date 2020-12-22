@@ -1,0 +1,21 @@
+{
+  "@id": "dtmi:com:hellem:dtsample:envsensor;1",
+  "@type": "Interface",
+  "@context": "dtmi:dtdl:context;2",
+  "displayName": "Env Sensor",
+  "contents": [
+    {
+      "@type": ["Property", "Temperature"],
+      "name": "Temperature",
+      "unit": "degreeFahrenheit",
+      "schema": "double",
+      "writable": true
+    },
+    {
+      "@type": "Property",
+      "name": "Humidity",
+      "schema": "double",
+      "writable": true
+    }
+  ]
+}

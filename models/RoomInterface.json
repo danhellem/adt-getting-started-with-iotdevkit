@@ -1,0 +1,34 @@
+{
+  "@id": "dtmi:com:hellem:dtsample:room;1",
+  "@type": "Interface",
+  "@context": "dtmi:dtdl:context;2",
+  "displayName": "Room",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "id",
+      "schema": "string",
+      "writable": true
+    },    
+    {
+      "@type": ["Property", "Temperature"],
+      "name": "Temperature",
+      "unit": "degreeFahrenheit",
+      "schema": "double",
+      "writable": true
+    },
+    {
+      "@type": "Property",
+      "name": "Humidity",
+      "schema": "double",
+      "writable": true
+    },
+    {
+      "@type": "Relationship",
+      "@id": "dtmi:com:hellem:dtsample:room:rel_has_envsensors;1",
+      "name": "rel_has_envsensors",
+      "displayName": "Room Has Env Sensors",
+      "target": "dtmi:com:hellem:dtsample:envsensor;1"
+    }
+  ]
+}
