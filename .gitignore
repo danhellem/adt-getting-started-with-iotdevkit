@@ -7,3 +7,4 @@
 /azure-functions/AdtDevKitFunctions/Properties/PublishProfiles/DevKitDevicesHubToADT20201210065322 - Zip Deploy.pubxml
 /azure-functions/AdtDevKitFunctions/Properties/ServiceDependencies/DevKitDevicesHubToADT20201210065322/profile.arm.json
 /azure-functions/AdtDevKitFunctions/Properties/ServiceDependencies/DevKitDevicesHubToADT20201210065322 - Zip Deploy/profile.arm.json
+/simulated-client/node_modules
