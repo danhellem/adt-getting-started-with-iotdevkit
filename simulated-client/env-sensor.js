@@ -17,9 +17,7 @@ const Message = require('azure-iot-device').Message;
 const temperatures = Array(5, 6, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
 const humidities = Array(30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 70, 71);
 
-// String containing Hostname, Device Id & Device Key in the following formats:
-//const deviceConnectionStrings = Array("HostName=danhellem-iot-hub.azure-devices.net;DeviceId=SimEnvSensor-1;SharedAccessKey=WsMTz3Jj5k0PnQTRykFznoJLipi0Ot18PKnB237AAn8=");
-const deviceConnectionString = "HostName=danhellem-iot-hub.azure-devices.net;DeviceId=SimEnvSensor-1;SharedAccessKey=WsMTz3Jj5k0PnQTRykFznoJLipi0Ot18PKnB237AAn8=";
+const deviceConnectionString = "";
 let sendInterval;
 
 function disconnectHandler () {
@@ -69,7 +67,7 @@ function connectCallback () {
 
     console.log('Sending message: ' + JSON.stringify(message));    
     client.sendEvent(message, printResultFor('send'));
-  }, 5000);
+  }, 2000);
 }
 
 // fromConnectionString must specify a transport constructor, coming from any transport package.
