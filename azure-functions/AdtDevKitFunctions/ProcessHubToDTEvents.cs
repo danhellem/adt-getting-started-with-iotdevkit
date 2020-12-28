@@ -46,13 +46,17 @@ namespace AdtDevKitFunctions
                     string deviceId = (string)deviceMessage["systemProperties"]["iothub-connection-device-id"];
                     string body = deviceMessage["body"].ToString();
 
-                    // body is base64 encoded, need to decode
-                    byte[] data = System.Convert.FromBase64String(body);
-                    string decodedBody = System.Text.ASCIIEncoding.ASCII.GetString(data);
+                    // not all devices encode the body, so we need to check and decode as needed
+                    if (this.IsBase64Encoded(body)) {
+                        byte[] data = System.Convert.FromBase64String(body);
+                        string decodedBody = System.Text.ASCIIEncoding.ASCII.GetString(data);
 
-                    log.LogInformation($"decodedBody: {decodedBody}");
+                        log.LogInformation($"decodedBody: {decodedBody}");
 
-                    JObject sensorData = (JObject)JsonConvert.DeserializeObject(decodedBody);
+                        body = decodedBody;
+                    }                    
+
+                    JObject sensorData = (JObject)JsonConvert.DeserializeObject(body);
 
                     // get values
                     JToken temeratureData = sensorData["temperature"];
@@ -107,6 +111,23 @@ namespace AdtDevKitFunctions
                 client = null;
                 credentials = null;
             }
+        }
+
+        private bool IsBase64Encoded(string base64String)
+        {
+            if (string.IsNullOrEmpty(base64String) || base64String.Length % 4 != 0 || base64String.Contains(" ") || base64String.Contains("\t") || base64String.Contains("\r") || base64String.Contains("\n"))
+                return false;
+            try
+            {
+                Convert.FromBase64String(base64String);
+                return true;
+            }
+            catch (Exception)
+            {
+                // Handle the exception
+            }
+
+            return false;
         }
     }
 }
