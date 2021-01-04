@@ -2,7 +2,7 @@ import React from "react";
 
 import * as coreHttp from "@azure/core-http";
 import { DigitalTwinsClient } from "@azure/digital-twins-core"
-import { DefaultAzureCredential } from "@azure/identity"
+import { DefaultAzureCredential, DefaultAzureCredentialOptions } from "@azure/identity"
 
 
 
@@ -20,13 +20,13 @@ class Dashboard extends React.Component<Props> {
         this.listTwins();
     }
 
-    private listTwins() {
-        const url = process.env.AZURE_URL;   
-        console.log(url);
-        //const url: string = "https://danhellem-digitial-twin.api.eus2.digitaltwins.azure.net"      
-
-        //const credential = new DefaultAzureCredential();
-        //const serviceClient = new DigitalTwinsClient(url, credential);      
+    private listTwins() {       
+        const url: string = "https://<my dt instance>.api.eus2.digitaltwins.azure.net"  
+    
+        var credOpts: DefaultAzureCredentialOptions = { tenantId: "<app registration tenant id>", managedIdentityClientId: "<app registration client id>" }
+           
+        const credential = new DefaultAzureCredential(credOpts);
+        const serviceClient = new DigitalTwinsClient(url, credential);      
 
         console.log(url);
     }
