@@ -1,21 +1,22 @@
 {
-  "name": "material-dashboard-react",
-  "homepage": "https://github.com/creativetimofficial/material-dashboard-react",
+  "name": "danhellem-azure-digital-twins-sample-react-app",
+  "homepage": "",
   "authors": [
-    "creative-tim"
+    "creative-tim",
+    "dan hellem"
   ],
-  "description": "A Badass Material-UI Kit based on Material Design",
+  "description": "Sample react-app that connects to your azure digital twins. Based on Material-UI Kit based on Material Design",
   "main": "public/index.html",
   "keywords": [
-    "material",
-    "design",
+    "azure",
+    "digital twins",
+    "danhellem",
+    "sample",
+    "material", 
     "material-ui",
-    "material",
-    "design",
-    "google",
-    "twitter"
+    "material"   
   ],
-  "license": "Creative TIM License",
+  "license": "MIT & Creative TIM License",
   "ignore": [
     "**/.*",
     "node_modules",

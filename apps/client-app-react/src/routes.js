@@ -17,12 +17,12 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
+import Settings from "@material-ui/icons/Settings";
 
 // core components/views for Admin layout
 import DashboardPage from "./views/Dashboard/Dashboard";
-import UserProfile from "./views/UserProfile/UserProfile.js";
+import SettingsPage from "./views/Settings/Settings";
 import TableList from "./views/TableList/TableList.js";
 import NotificationsPage from "./views/Notifications/Notifications.js";
 
@@ -32,13 +32,6 @@ const dashboardRoutes = [
     name: "Dashboard",  
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
-  },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: Person,
-    component: UserProfile,
     layout: "/admin"
   },
   {
@@ -53,6 +46,13 @@ const dashboardRoutes = [
     name: "Notifications",
     icon: Notifications,
     component: NotificationsPage,
+    layout: "/admin"
+  }, 
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: Settings,
+    component: SettingsPage,
     layout: "/admin"
   } 
   

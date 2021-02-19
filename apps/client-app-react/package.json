@@ -23,7 +23,9 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-swipeable-views": "0.13.9",
-    "typescript": "3.4.3"
+    "react-grid-system": "7.1.1",
+    "typescript": "3.4.3",
+    "http-proxy-middleware": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
