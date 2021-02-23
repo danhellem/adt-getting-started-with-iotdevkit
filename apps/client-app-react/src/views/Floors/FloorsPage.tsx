@@ -1,8 +1,10 @@
 import React from "react";
 import { Row, Col, Container, Modal, FormGroup, Button } from "react-bootstrap";
+import Select, { ValueType } from "react-select";
 
 import { ApiService } from "../../services/ApiService";
 import { datetimeFormatter } from "../../utils/dateFormatters";
+import { icons, colors } from "../../components/Data/icons"
 
 import { Icon, IconButton } from "@material-ui/core";
 
@@ -21,8 +23,8 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
     showModal: false,
     twinId: "",
     modalName: "",
-    modalColor: "",
-    modalIcon: "",
+    modalColor: { value: "", label: "" },
+    modalIcon: { value: "", label: "" },
     modalOrder: 0,
   };
 
@@ -38,43 +40,62 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
     this.setState({
       twinId: twin.name,
       modalName: twin.display.name,
-      modalColor: twin.display.color,
-      modalIcon: twin.display.icon,
+      modalColor: { value: twin.display.color, label: twin.display.color },
+      modalIcon: { value: twin.display.icon, label: twin.display.icon },
       modalOrder: twin.display.order,
       showModal: true,
     });
   };
 
   public handleSaveClick = async () => {
-        
     const patch = [
-      { op: "replace", path: `/Display/Name`, value: `${this.state.modalName}` },
-      { op: "replace", path: `/Display/Icon`, value: `${this.state.modalIcon}` },
-      { op: "replace", path: `/Display/Color`, value: `${this.state.modalColor}`},
-      { op: "replace", path: `/Display/Order`, value: this.state.modalOrder }
+      {
+        op: "replace",
+        path: `/Display/Name`,
+        value: `${this.state.modalName}`,
+      },
+      {
+        op: "replace",
+        path: `/Display/Icon`,
+        value: `${this.state.modalIcon.value}`,
+      },
+      {
+        op: "replace",
+        path: `/Display/Color`,
+        value: `${this.state.modalColor.value}`,
+      },
+      { op: "replace", path: `/Display/Order`, value: this.state.modalOrder },
     ];
 
-   // [
-   //   {
-   //     "op": "replace",
-   //     "path": "/Display/Order",
-   //     "value": { "Name": "Garage", "Icon": "info_outline", "Color": "info", "Order": 1 }
-   //   }
-   // ] 
- 
+    // [
+    //   {
+    //     "op": "replace",
+    //     "path": "/Display/Order",
+    //     "value": { "Name": "Garage", "Icon": "info_outline", "Color": "info", "Order": 1 }
+    //   }
+    // ]
+
     try {
       const api = new ApiService();
-      const response: DigitalTwinsUpdateResponse = await api.updateTwin(this.state.twinId, patch)
+      const response: DigitalTwinsUpdateResponse = await api.updateTwin(
+        this.state.twinId,
+        patch
+      );
 
-      if (response._response.status === 204)
-      {
-        this.setState({ showModal: false, twinId: "", modalName: "", modalColor: "", modalIcon: "", modalOrder: 0});
+      if (response._response.status === 204) {
+        this.setState({
+          showModal: false,
+          twinId: "",
+          modalName: "",
+          modalColor: { value: "", label: "" },
+          modalIcon: { value: "", label: "" },
+          modalOrder: 0,
+        });
         this.listTwins();
       }
-
     } catch (exc) {
-      console.log(`error updating twin: ${exc}`)
-    }    
+      console.log(`error updating twin: ${exc}`);
+    }
   };
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
@@ -212,51 +233,55 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                 <Container fluid>
                   <Row>
                     <Col md={12} sm={12}>
-                      
-                        <FormGroup>
-                          <label htmlFor="basic-url">Display Name</label>
-                          <input
-                            type="text"
-                            name="modalName"
-                            className="form-control form-control-lg"
-                            value={this.state.modalName}
-                            onChange={(e) => this.handleInputChanges(e)}
-                          />
-                        </FormGroup>
+                      <FormGroup>
+                        <label htmlFor="modalName">Display Name</label>
+                        <input
+                          type="text"
+                          name="modalName"                          
+                          value={this.state.modalName}
+                          onChange={(e) => this.handleInputChanges(e)}
+                        />
+                      </FormGroup>
 
-                        <FormGroup>
-                          <label htmlFor="basic-url">Color</label>
-                          <input
-                            type="text"
-                            name="modalColor"
-                            className="form-control form-control-lg"
-                            value={this.state.modalColor}
-                            onChange={(e) => this.handleInputChanges(e)}
-                          />
-                        </FormGroup>
+                      <FormGroup>
+                        <label htmlFor="modalColor">Color</label>
+                        <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="modalColor"  
+                          value={ this.state.modalColor }                        
+                          onChange={(value: any) =>
+                            this.setState({ modalColor: value })
+                          }
+                          options={colors}
+                          placeholder="primary"
+                        />
+                      </FormGroup>                      
 
-                        <FormGroup>
-                          <label htmlFor="basic-url">Icon</label>
-                          <input
-                            type="icon"
-                            name="modalIcon"
-                            className="form-control form-control-lg"
-                            value={this.state.modalIcon}
-                            onChange={(e) => this.handleInputChanges(e)}
-                          />
-                        </FormGroup>
+                      <FormGroup>
+                        <label htmlFor="modalIcon">Icon</label>
+                        <Select
+                          className="react-select primary"
+                          classNamePrefix="react-select"
+                          name="modalIcon"  
+                          value={ this.state.modalIcon }                        
+                          onChange={(value: any) =>
+                            this.setState({ modalIcon: value })
+                          }
+                          options={icons}
+                          placeholder="meeting_room"
+                        />
+                      </FormGroup>    
 
-                        <FormGroup>
-                          <label htmlFor="basic-url">Order</label>
-                          <input
-                            type="number"
-                            name="modalOrder"
-                            className="form-control form-control-lg"
-                            value={this.state.modalOrder}
-                            onChange={(e) => this.handleInputChanges(e)}
-                          />
-                        </FormGroup>
-                      
+                      <FormGroup>
+                        <label htmlFor="basic-url">Order</label>
+                        <input
+                          type="number"
+                          name="modalOrder"                          
+                          value={this.state.modalOrder}
+                          onChange={(e) => this.handleInputChanges(e)}
+                        />
+                      </FormGroup>
                     </Col>
                   </Row>
                 </Container>
@@ -291,8 +316,8 @@ export interface IFloorsPage {
   twinId: string;
   showModal: boolean;
   modalName: string;
-  modalColor: string;
-  modalIcon: string;
+  modalColor: ValueType<any, boolean>;
+  modalIcon: ValueType<any, boolean>;
   modalOrder: number;
 }
 export interface IDisplay {
