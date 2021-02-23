@@ -3,9 +3,7 @@ import { ApiService } from "../../services/ApiService";
 
 interface Props {}
 
-
-
-class Dashboard extends React.Component<Props> {
+class DevicesPage extends React.Component<Props> {
  // constructor(props: Props) {
  //   super(props);
  // }
@@ -16,9 +14,14 @@ class Dashboard extends React.Component<Props> {
 
   private async listTwins() {
     const api = new ApiService();
-    const result = await api.getTwinById("DevKit-1");
+    const twinResult = await api.getDigitalTwinById("DevKit-1");
 
-    console.log(result);
+    console.log(twinResult);
+
+    const queryResult = await api.getAllTwins();
+
+    console.log(queryResult);
+
   }
 
   render() {
@@ -26,4 +29,4 @@ class Dashboard extends React.Component<Props> {
   }
 }
 
-export default Dashboard;
+export default DevicesPage;

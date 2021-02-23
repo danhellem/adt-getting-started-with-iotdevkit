@@ -24,6 +24,31 @@
         "writable": true
       },
       {
+        "@type": "Property",
+        "name": "Display",
+        "schema": {
+          "@type": "Object",
+          "fields": [
+              {
+                "name": "Name",
+                "schema": "string"
+              },
+              {
+                "name": "Order",
+                "schema": "double"
+              },
+              {
+                "name": "Icon",
+                "schema": "string"
+              },
+              {
+                "name": "Color",
+                "schema": "string"
+              }
+            ]
+          }
+      },      
+      {
         "@type": "Relationship",
         "@id": "dtmi:com:hellem:dtsample:floor:rel_has_rooms;1",
         "name": "rel_has_rooms",

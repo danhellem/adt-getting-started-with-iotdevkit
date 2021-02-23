@@ -24,5 +24,8 @@ export default function GridItem(props) {
 }
 
 GridItem.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  xs: PropTypes.number,
+  sm: PropTypes.number,
+  md: PropTypes.number
 };

@@ -1,17 +1,16 @@
-
-
-  export function fetchAdtUrl(): string {
-    const stringValue: any =
-      localStorage.getItem("adtUrl") !== null
-        ? localStorage.getItem("adtUrl")
+  export function fetch(key: string): any {
+    const value: any =
+      localStorage.getItem(key) !== null
+        ? localStorage.getItem(key)
         : null;
 
-    return stringValue;
+    return value;
   };
 
-  export function storeAdtUrl(url: string): void {
-    localStorage.setItem("adtUrl", url);
+  export function store(key: string, value: string): void {
+    localStorage.setItem(key, value);
   };
 
-
-
+  export function clear(key: string): void {
+    localStorage.removeItem(key);
+  }

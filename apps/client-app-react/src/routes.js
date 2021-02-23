@@ -16,36 +16,45 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Notifications from "@material-ui/icons/Notifications";
 import Settings from "@material-ui/icons/Settings";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import FloorsIcon from "@material-ui/icons/House";
+import RoomIcon from "@material-ui/icons/Room";
+import DeviceIcon from "@material-ui/icons/Devices";
 
 // core components/views for Admin layout
-import DashboardPage from "./views/Dashboard/Dashboard";
-import SettingsPage from "./views/Settings/Settings";
-import TableList from "./views/TableList/TableList.js";
-import NotificationsPage from "./views/Notifications/Notifications.js";
-
+import DashboardPage from "./views/Dashboard/DashboardPage";
+import FloorsPage from "./views/Floors/FloorsPage";
+import RoomsPage from "./views/Rooms/RoomsPage";
+import DevicesPage from "./views/Devices/DevicesPage";
+import SettingsPage from "./views/Settings/SettingsPage";
 const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",  
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: DashboardPage,
     layout: "/admin"
   },
   {
-    path: "/table",
-    name: "Table List",
-    icon: "content_paste",
-    component: TableList,
+    path: "/location",
+    name: "Floors",  
+    icon: FloorsIcon,
+    component: FloorsPage,
     layout: "/admin"
-  },  
+  },
   {
-    path: "/notifications",
-    name: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage,
+    path: "/rooms",
+    name: "Rooms",  
+    icon: RoomIcon,
+    component: RoomsPage,
+    layout: "/admin"
+  },
+  {
+    path: "/devices",
+    name: "Devices",  
+    icon: DeviceIcon,
+    component: DevicesPage,
     layout: "/admin"
   }, 
   {

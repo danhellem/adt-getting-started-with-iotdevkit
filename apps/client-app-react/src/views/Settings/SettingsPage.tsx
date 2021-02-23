@@ -7,24 +7,24 @@ import CardFooter from "../../components/Card/CardFooter";
 import CardHeader from "../../components/Card/CardHeader";
 import Button from "../../components/CustomButtons/Button.js";
 
-import { fetchAdtUrl, storeAdtUrl } from "../../utils/localCache";
+import { fetch, store } from "../../utils/localCache";
 
 interface Props {}
 
-class Settings extends React.Component<Props, ISettingsPage> {
+class SettingsPage extends React.Component<Props, ISettingsPage> {
   state: ISettingsPage = {
     message: "",
     adtUrl: "",
   };
 
   componentDidMount() {    
-    var url = fetchAdtUrl();
+    var url = fetch("adtUrl");
     this.setState({adtUrl: url});
   }
 
   public handleSaveButtonClick = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();    
-    storeAdtUrl(this.state.adtUrl);   
+    store("adtUrl", this.state.adtUrl);   
   };
 
   public handleTestButtonClick = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -78,6 +78,7 @@ class Settings extends React.Component<Props, ISettingsPage> {
 													name="adtUrl"
 													className="form-control form-control-lg"
 													value={this.state.adtUrl}
+                          placeholder="https://name-digitial-twin.api.eus2.digitaltwins.azure.net"
 													onChange={(e) => this.handleInputChanges(e)}
 												/>                    
                   </div>
@@ -106,7 +107,7 @@ class Settings extends React.Component<Props, ISettingsPage> {
   }
 }
 
-export default Settings;
+export default SettingsPage;
 
 export interface ISettingsPage {
   message: string;
