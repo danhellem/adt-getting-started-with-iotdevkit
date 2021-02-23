@@ -37,8 +37,10 @@ const useStyles = makeStyles(styles);
 export default function Admin({ ...rest }) {
   // styles
   const classes = useStyles();
+
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
+
   // states and functions  
   const [color] = React.useState("blue");
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -46,9 +48,11 @@ export default function Admin({ ...rest }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
+
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -89,6 +93,7 @@ export default function Admin({ ...rest }) {
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
+        
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
@@ -97,6 +102,7 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
+        
         {getRoute() ? <Footer /> : null}        
       </div>
     </div>

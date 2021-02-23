@@ -1,17 +1,18 @@
 import React from "react";
-import { Row, Col, Container, Modal, FormGroup, Button } from "react-bootstrap";
+import { Row, Col, Container, Modal, FormGroup } from "react-bootstrap";
 import Select, { ValueType } from "react-select";
 
 import { ApiService } from "../../services/ApiService";
 import { datetimeFormatter } from "../../utils/dateFormatters";
-import { icons, colors } from "../../components/Data/icons"
+import { icons, colors } from "../../components/Data/icons";
 
 import { Icon, IconButton } from "@material-ui/core";
-
 import Card from "../../components/Card/Card";
 import CardFooter from "../../components/Card/CardFooter";
 import CardHeader from "../../components/Card/CardHeader";
 import CardIcon from "../../components/Card/CardIcon";
+import Button from "../../components/CustomButtons/Button.js";
+
 import { DigitalTwinsUpdateResponse } from "@azure/digital-twins-core";
 
 interface Props {}
@@ -48,6 +49,9 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   };
 
   public handleSaveClick = async () => {
+    
+    // this patch only works if the twin already has the properties defined
+    // todo: need to figure out a better way to do this without getting errors if the twin does not have the display property
     const patch = [
       {
         op: "replace",
@@ -82,7 +86,24 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
         patch
       );
 
+      // check for successfull response
       if (response._response.status === 204) {
+        // find the item in the array that has been updated and go update it in the list
+        // re-bind it to the state.data so that cards are updated in real time without having to reload data from server
+        const index: number = this.state.data.findIndex(
+          (e) => e.name === this.state.twinId
+        );
+        let newArray: ITwin[] = [...this.state.data];
+        newArray[index] = {
+          ...newArray[index],
+          display: {
+            name: this.state.modalName,
+            icon: this.state.modalIcon.value,
+            color: this.state.modalColor.value,
+            order: this.state.modalOrder,
+          },
+        };
+
         this.setState({
           showModal: false,
           twinId: "",
@@ -90,13 +111,20 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
           modalColor: { value: "", label: "" },
           modalIcon: { value: "", label: "" },
           modalOrder: 0,
-        });
-        this.listTwins();
+          data: newArray,
+        });    
       }
     } catch (exc) {
       console.log(`error updating twin: ${exc}`);
     }
   };
+
+  // refresh data by re-load twins
+  private handleRefreshList = () => {
+    console.log("data refreshed")
+    
+    this.listTwins();
+  }
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -161,6 +189,18 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
           <div>
             <Container fluid>
               <Row>
+                <Col md={12} lg={12} sm={16}>
+                  <div className="pull-right">
+                    <IconButton
+                      onClick={(e: any) => this.handleRefreshList()}
+                      aria-label="refresh list"
+                    >
+                      <span className="material-icons">refresh</span>
+                    </IconButton>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
                 {this.state.data.map((x, key) => (
                   <Col md={6} lg={4} sm={8} key={key}>
                     <Card>
@@ -178,7 +218,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                             marginBottom: "0",
                           }}
                         >
-                          {x.name}
+                          {x.display.name}
                         </h1>
                         <h3
                           style={{
@@ -237,7 +277,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                         <label htmlFor="modalName">Display Name</label>
                         <input
                           type="text"
-                          name="modalName"                          
+                          name="modalName"
                           value={this.state.modalName}
                           onChange={(e) => this.handleInputChanges(e)}
                         />
@@ -248,36 +288,36 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                         <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
-                          name="modalColor"  
-                          value={ this.state.modalColor }                        
+                          name="modalColor"
+                          value={this.state.modalColor}
                           onChange={(value: any) =>
                             this.setState({ modalColor: value })
                           }
                           options={colors}
                           placeholder="primary"
                         />
-                      </FormGroup>                      
+                      </FormGroup>
 
                       <FormGroup>
                         <label htmlFor="modalIcon">Icon</label>
                         <Select
                           className="react-select primary"
                           classNamePrefix="react-select"
-                          name="modalIcon"  
-                          value={ this.state.modalIcon }                        
+                          name="modalIcon"
+                          value={this.state.modalIcon}
                           onChange={(value: any) =>
                             this.setState({ modalIcon: value })
                           }
                           options={icons}
                           placeholder="meeting_room"
                         />
-                      </FormGroup>    
+                      </FormGroup>
 
                       <FormGroup>
                         <label htmlFor="basic-url">Order</label>
                         <input
                           type="number"
-                          name="modalOrder"                          
+                          name="modalOrder"
                           value={this.state.modalOrder}
                           onChange={(e) => this.handleInputChanges(e)}
                         />
@@ -288,14 +328,18 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
               </Modal.Body>
               <Modal.Footer>
                 <Button
-                  onClick={() => this.handleCloseModal()}
-                  className="btn btn-fill btn-warning"
+                  onClick={(e: React.FormEvent<HTMLButtonElement>) =>
+                    this.handleCloseModal()
+                  }
                 >
                   Cancel
                 </Button>
+                &nbsp;&nbsp;
                 <Button
-                  onClick={(e) => this.handleSaveClick()}
-                  className="btn btn-fill btn-primary"
+                  color="primary"
+                  onClick={(e: React.FormEvent<HTMLButtonElement>) =>
+                    this.handleSaveClick()
+                  }
                 >
                   Save Changes
                 </Button>
