@@ -189,7 +189,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
           <div>
             <Container fluid>
               <Row>
-                <Col md={12} lg={12} sm={16}>
+                <Col md={12} lg={9} sm={8}>
                   <div className="pull-right">
                     <IconButton
                       onClick={(e: any) => this.handleRefreshList()}
@@ -202,7 +202,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
               </Row>
               <Row>
                 {this.state.data.map((x, key) => (
-                  <Col md={6} lg={4} sm={8} key={key}>
+                  <Col md={4} lg={3} sm={8} key={key}>
                     <Card>
                       <CardHeader color={x.display.color} stats icon>
                         <CardIcon color={x.display.color}>
