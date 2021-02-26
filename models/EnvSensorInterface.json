@@ -6,14 +6,14 @@
   "contents": [
     {
       "@type": ["Property", "Temperature"],
-      "name": "Temperature",
+      "name": "temperature",
       "unit": "degreeFahrenheit",
       "schema": "double",
       "writable": true
     },
     {
       "@type": "Property",
-      "name": "Humidity",
+      "name": "humidity",
       "schema": "double",
       "writable": true
     }

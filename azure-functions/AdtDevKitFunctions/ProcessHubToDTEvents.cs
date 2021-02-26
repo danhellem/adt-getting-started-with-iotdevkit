@@ -73,14 +73,14 @@ namespace AdtDevKitFunctions
                     // do some logging
                     log.LogInformation($"Device Id: {deviceId};");
 
-                    if (temperature != -99) { log.LogInformation($"Temperature: {temperature}"); }
-                    if (humidity != -99) { log.LogInformation($"Humidity: {humidity}"); }
+                    if (temperature != -99) { log.LogInformation($"temperature: {temperature}"); }
+                    if (humidity != -99) { log.LogInformation($"humidity: {humidity}"); }
 
                     var updateTwinData = new JsonPatchDocument();
 
                     // update twin data when variables are not null
-                    if (temperature != -99) updateTwinData.AppendAdd("/Temperature", temperature);
-                    if (humidity != -99) updateTwinData.AppendAdd("/Humidity", humidity);
+                    if (temperature != -99) updateTwinData.AppendAdd("/temperature", temperature);
+                    if (humidity != -99) updateTwinData.AppendAdd("/humidity", humidity);
 
                     // get room
                     Pageable<IncomingRelationship> incomingRelationship = client.GetIncomingRelationships(deviceId);

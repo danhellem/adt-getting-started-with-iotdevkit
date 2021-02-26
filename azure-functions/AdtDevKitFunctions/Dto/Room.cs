@@ -7,8 +7,8 @@ namespace AdtDevKitFunctions.Dto
 {
     public class Room
     {
-        public string Id { get; set; }
-        public double Temperature { get; set; } = -99;
-        public double Humidity { get; set; } = -99;
+        public string id { get; set; }
+        public double temperature { get; set; } = -99;
+        public double humidity { get; set; } = -99;
     }
 }

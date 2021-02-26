@@ -106,9 +106,9 @@ namespace AdtDevKitFunctions
                             JObject room = (JObject)JsonConvert.DeserializeObject(twin.Contents["Room"].ToString());
 
                             roomList.Add(new Room() { 
-                                Id = twin.Id, 
-                                Temperature = Convert.ToDouble(room["Temperature"]), 
-                                Humidity = Convert.ToDouble(room["Humidity"]) 
+                                id = twin.Id, 
+                                temperature = Convert.ToDouble(room["temperature"]), 
+                                humidity = Convert.ToDouble(room["humidity"]) 
                             });                            
                         }
 
@@ -120,16 +120,16 @@ namespace AdtDevKitFunctions
                         }                       
 
                         // get the averages from the list rooms
-                        double avgTemperature = roomList.Average(x => x.Temperature);
-                        double avgHumidity = roomList.Average(x => x.Humidity);
+                        double avgTemperature = roomList.Average(x => x.temperature);
+                        double avgHumidity = roomList.Average(x => x.humidity);
 
                         log.LogInformation($"Average Temperature: {avgTemperature.ToString()}, Average Humidity: {avgHumidity.ToString()}");
 
                         var updateTwinData = new JsonPatchDocument();
 
                         // update twin data for the floor
-                        updateTwinData.AppendReplace("/Temperature", Math.Round(avgTemperature, 2));
-                        updateTwinData.AppendReplace("/Humidity", Math.Round(avgHumidity, 2));
+                        updateTwinData.AppendReplace("/temperature", Math.Round(avgTemperature, 2));
+                        updateTwinData.AppendReplace("/humidity", Math.Round(avgHumidity, 2));
 
                         try
                         {

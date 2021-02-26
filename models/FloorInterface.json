@@ -12,37 +12,37 @@
       },     
       {
         "@type": ["Property", "Temperature"],
-        "name": "Temperature",
+        "name": "temperature",
         "unit": "degreeFahrenheit",
         "schema": "double",
         "writable": true
       },
       {
         "@type": "Property",
-        "name": "Humidity",
+        "name": "humidity",
         "schema": "double",
         "writable": true
       },
       {
         "@type": "Property",
-        "name": "Display",
+        "name": "display",
         "schema": {
           "@type": "Object",
           "fields": [
               {
-                "name": "Name",
+                "name": "name",
                 "schema": "string"
               },
               {
-                "name": "Order",
+                "name": "order",
                 "schema": "double"
               },
               {
-                "name": "Icon",
+                "name": "icon",
                 "schema": "string"
               },
               {
-                "name": "Color",
+                "name": "color",
                 "schema": "string"
               }
             ]
