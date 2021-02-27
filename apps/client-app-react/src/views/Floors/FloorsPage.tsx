@@ -32,7 +32,6 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
 
   componentDidMount() {
     this.listFloors();
-    this.listRooms();
   }
 
   public handleCloseModal = () => {
@@ -56,20 +55,20 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
     const patch = [
       {
         op: "replace",
-        path: `/Display/Name`,
+        path: `/display/name`,
         value: `${this.state.modalName}`,
       },
       {
         op: "replace",
-        path: `/Display/Icon`,
+        path: `/display/icon`,
         value: `${this.state.modalIcon.value}`,
       },
       {
         op: "replace",
-        path: `/Display/Color`,
+        path: `/display/color`,
         value: `${this.state.modalColor.value}`,
       },
-      { op: "replace", path: `/Display/Order`, value: this.state.modalOrder },
+      { op: "replace", path: `/display/order`, value: this.state.modalOrder }
     ];
 
     // [
@@ -124,7 +123,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   private handleRefreshPage = () => {
     console.log("data refreshed");
 
-    this.listFloors();
+    this.listFloors();   
   };
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
@@ -170,7 +169,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
         },
       };
 
-      if (x.Display != null) {
+      if (x.display != null) {
         twin.display.color = x.display.color;
         twin.display.icon = x.display.icon;
         twin.display.order = x.display.order;
@@ -226,6 +225,8 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
         <div className="content">
           <div>
             <Container fluid>
+            <h2>Floors</h2>
+              <br/>
               <Row>
                 <Col md={12} lg={9} sm={8}>
                   <div className="pull-right">
@@ -294,67 +295,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                   </Col>
                 ))}
               </Row>
-              <br/>
-              <h2>Rooms</h2>
-              <br/>
-              <Row>
-                {this.state.rooms.map((x, key) => (
-                  <Col md={4} lg={3} sm={8} key={key}>
-                    <Card>
-                      <CardHeader color={x.display.color} stats icon>
-                        <CardIcon color={x.display.color}>
-                          <Icon>{x.display.icon}</Icon>
-                        </CardIcon>
-                        <h1
-                          style={{
-                            color: "#999",
-                            margin: "0",
-                            fontSize: "24px",
-                            marginTop: "0",
-                            paddingTop: "10px",
-                            marginBottom: "0",
-                          }}
-                        >
-                          {x.display.name}
-                        </h1>
-                        <h3
-                          style={{
-                            color: "#3C4858",
-                            marginTop: "0px",
-                            minHeight: "auto",
-                            fontWeight: "normal",
-                            fontFamily:
-                              "'Roboto', 'Helvetica', 'Arial', 'sans-serif'",
-                            marginBottom: "3px",
-                            textDecoration: "none",
-                          }}
-                        >
-                          {x.temperature} °F
-                          <br />
-                          {x.humidity}% Humidity
-                        </h3>
-                      </CardHeader>
-                      <CardFooter stats>
-                        <div>
-                          <span style={{ fontSize: 13 }}>
-                            {datetimeFormatter(x.lastUpdated)}
-                          </span>
-                        </div>
-                        <div>
-                          <IconButton
-                            onClick={(e: any) => this.handleShowModal(x)}
-                            aria-label="edit twin"
-                          >
-                            <span className="material-icons">mode_edit</span>
-                          </IconButton>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            
-              
+                           
             </Container>
           </div>
           <div>

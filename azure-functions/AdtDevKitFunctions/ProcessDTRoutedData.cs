@@ -26,11 +26,12 @@ namespace AdtDevKitFunctions
     {
         private static HttpClient _httpClient = new HttpClient();
         private static string _adtServiceUrl = Environment.GetEnvironmentVariable("ADT_SERVICE_URL");
+        private static bool _logMe = true;
 
         [FunctionName("ProcessDTRoutedData")]
         public async Task Run([EventGridTrigger] EventGridEvent eventGridEvent, ILogger log)
         {
-            log.LogInformation("ProcessDTRoutedData (Start)...");
+            if (_logMe) log.LogInformation("ProcessDTRoutedData (Start)...");
 
             DigitalTwinsClient client;
             DefaultAzureCredential credentials;
@@ -71,11 +72,13 @@ namespace AdtDevKitFunctions
                 {
                     JObject message = (JObject)JsonConvert.DeserializeObject(eventGridEvent.Data.ToString());
 
-                    string twinId = eventGridEvent.Subject.ToString();
-                    log.LogInformation($"TwinId: {twinId}");
+                    if (_logMe) log.LogInformation($"Updating Floor...");
 
-                    string modelId = message["data"]["modelId"].ToString();                                  
-                    log.LogInformation($"ModelId: {modelId}");
+                    string twinId = eventGridEvent.Subject.ToString();
+                    if (_logMe) log.LogInformation($"TwinId: {twinId}");
+
+                    string modelId = message["data"]["modelId"].ToString();
+                    if (_logMe) log.LogInformation($"ModelId: {modelId}");
 
                     string floorId = null;
 
@@ -87,13 +90,15 @@ namespace AdtDevKitFunctions
                         // get the sourceId (parentId)
                         await foreach (IncomingRelationship floor in floorList)
                         {
-                            floorId = floor.SourceId;                            
+                            floorId = floor.SourceId;                               
                         }
+
+                        if (_logMe) log.LogError($"Floor: {floorId}");
 
                         // if the parentId (SourceId) is null or empty, then something went wrong
                         if (string.IsNullOrEmpty(floorId))
                         {
-                            log.LogError($"'SourceId' is missing from GetIncomingRelationships({twinId}) call. This should never happen.");
+                            if (_logMe) log.LogError($"'SourceId' is missing from GetIncomingRelationships({twinId}) call. This should never happen.");
                             return;
                         }
                         
@@ -115,7 +120,7 @@ namespace AdtDevKitFunctions
                         // if no rooms, then something went wrong and we should return out
                         if (roomList.Count < 1)
                         {
-                            log.LogError($"'roomList' is empty for floor ({floorId}). This should never happen.");
+                            if (_logMe) log.LogError($"'roomList' is empty for floor ({floorId}). This should never happen.");
                             return;
                         }                       
 
@@ -123,7 +128,7 @@ namespace AdtDevKitFunctions
                         double avgTemperature = roomList.Average(x => x.temperature);
                         double avgHumidity = roomList.Average(x => x.humidity);
 
-                        log.LogInformation($"Average Temperature: {avgTemperature.ToString()}, Average Humidity: {avgHumidity.ToString()}");
+                        if (_logMe) log.LogInformation($"Average Temperature: {avgTemperature.ToString()}, Average Humidity: {avgHumidity.ToString()}");
 
                         var updateTwinData = new JsonPatchDocument();
 
@@ -133,10 +138,12 @@ namespace AdtDevKitFunctions
 
                         try
                         {
+                            if (_logMe) log.LogInformation(updateTwinData.ToString());
+
                             await client.UpdateDigitalTwinAsync(floorId, updateTwinData);
 
-                            log.LogInformation("ProcessDTRoutedData (Done)...");
-                            log.LogInformation(" ");
+                            if (_logMe) log.LogInformation("ProcessDTRoutedData (Done)...");
+                            if (_logMe) log.LogInformation(" ");
                         }
                         catch (Exception ex)
                         {

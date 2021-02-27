@@ -20,6 +20,7 @@ namespace AdtDevKitFunctions
     {
         private static HttpClient _httpClient = new HttpClient();
         private static string _adtServiceUrl = Environment.GetEnvironmentVariable("ADT_SERVICE_URL");
+        private static bool _logMe = false;
 
         [FunctionName("ProcessHubToDTEvents")]
         public async void Run([EventGridTrigger] EventGridEvent message, ILogger log)
@@ -27,9 +28,9 @@ namespace AdtDevKitFunctions
             DigitalTwinsClient client;
             DefaultAzureCredential credentials;
 
-            log.LogInformation(message.Data.ToString());
+            if (_logMe) log.LogInformation(message.Data.ToString());
 
-            if (_adtServiceUrl == null) log.LogError("Application setting \"ADT_SERVICE_URL\" not set");
+            if (_adtServiceUrl == null && _logMe) log.LogError("Application setting \"ADT_SERVICE_URL\" not set");
 
             try
             {
@@ -37,7 +38,7 @@ namespace AdtDevKitFunctions
                 credentials = new DefaultAzureCredential();
                 client = new DigitalTwinsClient(new Uri(_adtServiceUrl), credentials, new DigitalTwinsClientOptions { Transport = new HttpClientTransport(_httpClient) });
 
-                log.LogInformation($"ADT service client connection created.");
+                if (_logMe) log.LogInformation($"ADT service client connection created.");
 
                 if (message != null && message.Data != null)
                 {
@@ -51,7 +52,7 @@ namespace AdtDevKitFunctions
                         byte[] data = System.Convert.FromBase64String(body);
                         string decodedBody = System.Text.ASCIIEncoding.ASCII.GetString(data);
 
-                        log.LogInformation($"decodedBody: {decodedBody}");
+                        if (_logMe) log.LogInformation($"decodedBody: {decodedBody}");
 
                         body = decodedBody;
                     }                    
@@ -71,10 +72,10 @@ namespace AdtDevKitFunctions
                     if (humidityData != null) { humidity = Math.Round(humidityData.Value<double>(), 2); }
 
                     // do some logging
-                    log.LogInformation($"Device Id: {deviceId};");
+                    if (_logMe) log.LogInformation($"Device Id: {deviceId};");
 
-                    if (temperature != -99) { log.LogInformation($"temperature: {temperature}"); }
-                    if (humidity != -99) { log.LogInformation($"humidity: {humidity}"); }
+                    if (temperature != -99 && _logMe) { log.LogInformation($"temperature: {temperature}"); }
+                    if (humidity != -99 && _logMe) { log.LogInformation($"humidity: {humidity}"); }
 
                     var updateTwinData = new JsonPatchDocument();
 
@@ -86,13 +87,13 @@ namespace AdtDevKitFunctions
                     Pageable<IncomingRelationship> incomingRelationship = client.GetIncomingRelationships(deviceId);
                     string sourceId = incomingRelationship.First<IncomingRelationship>().SourceId;
 
-                    log.LogInformation($"Room Twin Id: {sourceId};");
+                    if (_logMe) log.LogInformation($"Room Twin Id: {sourceId};");
 
                     // update twin 
                     if (!(temperature == -99 && humidity == -99))
                     {
-                        log.LogInformation($"Executed update!");
-                        log.LogInformation($" ");
+                        if (_logMe) log.LogInformation($"Executed update!");
+                        if (_logMe) log.LogInformation($" ");
 
                         // update device
                         await client.UpdateDigitalTwinAsync(deviceId, updateTwinData);

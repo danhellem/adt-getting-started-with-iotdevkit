@@ -28,6 +28,7 @@ import FloorsPage from "./views/Floors/FloorsPage";
 import RoomsPage from "./views/Rooms/RoomsPage";
 import DevicesPage from "./views/Devices/DevicesPage";
 import SettingsPage from "./views/Settings/SettingsPage";
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
