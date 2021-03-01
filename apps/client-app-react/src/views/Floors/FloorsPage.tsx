@@ -20,8 +20,7 @@ interface Props {}
 class FloorsPage extends React.Component<Props, IFloorsPage> {
   state: IFloorsPage = {
     message: "",
-    floors: [],
-    rooms: [],
+    data: [],   
     showModal: false,
     twinId: "",
     modalName: "",
@@ -90,10 +89,10 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
       if (response._response.status === 204) {
         // find the item in the array that has been updated and go update it in the list
         // re-bind it to the state.data so that cards are updated in real time without having to reload data from server
-        const index: number = this.state.floors.findIndex(
+        const index: number = this.state.data.findIndex(
           (e) => e.name === this.state.twinId
         );
-        let newArray: ITwin[] = [...this.state.floors];
+        let newArray: ITwin[] = [...this.state.data];
         newArray[index] = {
           ...newArray[index],
           display: {
@@ -111,7 +110,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
           modalColor: { value: "", label: "" },
           modalIcon: { value: "", label: "" },
           modalOrder: 0,
-          floors: newArray,
+          data: newArray,
         });
       }
     } catch (exc) {
@@ -151,12 +150,13 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   private async listFloors() {
     const api = new ApiService();
     const twinResult = await api.queryTwins(
-      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:floor;1')"
+      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:floor;1') OR IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')"
     );
 
     var twinData: ITwin[] = twinResult.map((x) => {
       let twin: ITwin = {
         name: x.$dtId,
+        model: x.$metadata.$model,
         temperature: Math.round(x.temperature),
         humidity: Math.round(x.humidity),
         lastUpdated: x.$metadata.humidity.lastUpdateTime,
@@ -179,45 +179,8 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
       return twin;
     });
 
-    this.setState({ floors: twinData });
-  }
-
-  private async listRooms(floorId: string = "") {
-    const api: ApiService = new ApiService();
-    const query: string =
-      floorId !== ""
-        ? `SELECT Room FROM digitaltwins Floor JOIN Room RELATED Floor.rel_has_rooms WHERE Floor.$dtId = '${floorId}'`
-        : `SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')`;
-
-    const twinResult = await api.queryTwins(query);
-
-    var twinData: ITwin[] = twinResult.map((x) => {
-      let twin: ITwin = {
-        name: x.$dtId,
-        temperature: Math.round(x.temperature),
-        humidity: Math.round(x.humidity),
-        lastUpdated: x.$metadata.humidity.lastUpdateTime,
-        warning: false,
-        display: {
-          name: x.$dtId,
-          order: 0,
-          icon: "content_copy",
-          color: "primary",
-        },
-      };
-
-      if (x.Display != null) {
-        twin.display.color = x.display.color;
-        twin.display.icon = x.display.icon;
-        twin.display.order = x.display.order;
-        twin.display.name = x.display.name;
-      }
-
-      return twin;
-    });
-
-    this.setState({ rooms: twinData });
-  }
+    this.setState({ data: twinData });
+  }  
 
   render() {
     return (
@@ -225,11 +188,15 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
         <div className="content">
           <div>
             <Container fluid>
-            <h2>Floors</h2>
-              <br/>
+            
               <Row>
-                <Col md={12} lg={9} sm={8}>
-                  <div className="pull-right">
+                <Col md={1} lg={1} sm={2}>
+                  <div>
+                  <h2>Floors</h2>
+                  </div>
+                </Col>
+                <Col md={1} lg={1} sm={2}> 
+                  <div style={{alignItems: 'center', verticalAlign: 'middle', marginTop: '22px'}}>
                     <IconButton
                       onClick={(e: any) => this.handleRefreshPage()}
                       aria-label="refresh list"
@@ -240,7 +207,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                 </Col>
               </Row>
               <Row>
-                {this.state.floors.map((x, key) => (
+                {this.state.data.filter(d => d.model.includes('dtmi:com:hellem:dtsample:floor;1')).map((x, key) => (
                   <Col md={4} lg={3} sm={8} key={key}>
                     <Card>
                       <CardHeader color={x.display.color} stats icon>
@@ -295,7 +262,72 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
                   </Col>
                 ))}
               </Row>
-                           
+
+              <Row>
+                <Col md={1} lg={1} sm={2}>
+                  <div>
+                  <h2>Rooms</h2>
+                  </div>
+                </Col>                
+              </Row>
+              
+              <Row>
+                {this.state.data.filter(d => d.model.includes('dtmi:com:hellem:dtsample:room;1')).map((x, key) => (
+                  <Col md={4} lg={3} sm={8} key={key}>
+                    <Card>
+                      <CardHeader color={x.display.color} stats icon>
+                        <CardIcon color={x.display.color}>
+                          <Icon>{x.display.icon}</Icon>
+                        </CardIcon>
+                        <h1
+                          style={{
+                            color: "#999",
+                            margin: "0",
+                            fontSize: "24px",
+                            marginTop: "0",
+                            paddingTop: "10px",
+                            marginBottom: "0",
+                          }}
+                        >
+                          {x.display.name}
+                        </h1>
+                        <h3
+                          style={{
+                            color: "#3C4858",
+                            marginTop: "0px",
+                            minHeight: "auto",
+                            fontWeight: "normal",
+                            fontFamily:
+                              "'Roboto', 'Helvetica', 'Arial', 'sans-serif'",
+                            marginBottom: "3px",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {x.temperature} °F
+                          <br />
+                          {x.humidity}% Humidity
+                        </h3>
+                      </CardHeader>
+                      <CardFooter stats>
+                        <div>
+                          <span style={{ fontSize: 13 }}>
+                            {datetimeFormatter(x.lastUpdated)}
+                          </span>
+                        </div>
+                        <div>
+                          <IconButton
+                            onClick={(e: any) => this.handleShowModal(x)}
+                            aria-label="edit twin"
+                          >
+                            <span className="material-icons">mode_edit</span>
+                          </IconButton>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            
             </Container>
           </div>
           <div>
@@ -396,8 +428,7 @@ export default FloorsPage;
 
 export interface IFloorsPage {
   message: string;
-  floors: ITwin[];
-  rooms: ITwin[];
+  data: ITwin[]; 
   twinId: string;
   showModal: boolean;
   modalName: string;
@@ -414,6 +445,7 @@ export interface IDisplay {
 
 export interface ITwin {
   name: string;
+  model: string;
   temperature: number;
   humidity: number;
   warning: boolean;
