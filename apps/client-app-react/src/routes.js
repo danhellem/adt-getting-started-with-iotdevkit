@@ -19,13 +19,11 @@
 import Settings from "@material-ui/icons/Settings";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import FloorsIcon from "@material-ui/icons/House";
-import RoomIcon from "@material-ui/icons/Room";
 import DeviceIcon from "@material-ui/icons/Devices";
 
 // core components/views for Admin layout
 import DashboardPage from "./views/Dashboard/DashboardPage";
-import FloorsPage from "./views/Floors/FloorsPage";
-import RoomsPage from "./views/Rooms/RoomsPage";
+import FloorsAndRoomsPage from "./views/FloorsAndRooms/FloorsAndRoomsPage";
 import DevicesPage from "./views/Devices/DevicesPage";
 import SettingsPage from "./views/Settings/SettingsPage";
 
@@ -39,18 +37,11 @@ const dashboardRoutes = [
   },
   {
     path: "/location",
-    name: "Floors",  
+    name: "Floors and Rooms",  
     icon: FloorsIcon,
-    component: FloorsPage,
+    component: FloorsAndRoomsPage,
     layout: "/admin"
-  },
-  {
-    path: "/rooms",
-    name: "Rooms",  
-    icon: RoomIcon,
-    component: RoomsPage,
-    layout: "/admin"
-  },
+  }, 
   {
     path: "/devices",
     name: "Devices",  

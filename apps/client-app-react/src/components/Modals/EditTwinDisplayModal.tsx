@@ -2,7 +2,7 @@ import React from "react";
 
 import { Modal, Button, Row, Col, FormGroup } from "react-bootstrap";
 import { Container } from "react-grid-system";
-import { ITwin } from "../../views/Floors/FloorsPage";
+import { ITwin } from "../../views/FloorsAndRooms/FloorsAndRoomsPage";
 
 export class EditTwinDisplayModal extends React.Component<IModalProps, {}> {
   static defaultProps: Partial<IModalProps> = {};

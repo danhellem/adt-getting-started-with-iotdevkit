@@ -17,8 +17,8 @@ import { DigitalTwinsUpdateResponse } from "@azure/digital-twins-core";
 
 interface Props {}
 
-class FloorsPage extends React.Component<Props, IFloorsPage> {
-  state: IFloorsPage = {
+class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
+  state: IFloorsAndRoomsPage = {
     message: "",
     data: [],   
     showModal: false,
@@ -30,7 +30,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   };
 
   componentDidMount() {
-    this.listFloors();
+    this.listFloorsAndRooms();
   }
 
   public handleCloseModal = () => {
@@ -122,7 +122,7 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   private handleRefreshPage = () => {
     console.log("data refreshed");
 
-    this.listFloors();   
+    this.listFloorsAndRooms();   
   };
 
   private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
@@ -134,20 +134,20 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
     ) {
       this.setState(({
         [e.currentTarget.name]: e.currentTarget.value,
-      } as unknown) as Pick<IFloorsPage, keyof IFloorsPage>);
+      } as unknown) as Pick<IFloorsAndRoomsPage, keyof IFloorsAndRoomsPage>);
     } else {
       this.setState(({
         [e.currentTarget.name]:
           e.currentTarget.type === "number"
             ? parseInt(e.currentTarget.value)
             : e.currentTarget.value,
-      } as unknown) as Pick<IFloorsPage, keyof IFloorsPage>);
+      } as unknown) as Pick<IFloorsAndRoomsPage, keyof IFloorsAndRoomsPage>);
     }
 
     //this.validateForm();
   };
 
-  private async listFloors() {
+  private async listFloorsAndRooms() {
     const api = new ApiService();
     const twinResult = await api.queryTwins(
       "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:floor;1') OR IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')"
@@ -424,9 +424,9 @@ class FloorsPage extends React.Component<Props, IFloorsPage> {
   }
 }
 
-export default FloorsPage;
+export default FloorsAndRoomsPage;
 
-export interface IFloorsPage {
+export interface IFloorsAndRoomsPage {
   message: string;
   data: ITwin[]; 
   twinId: string;
