@@ -43,6 +43,9 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
+
+  console.log(classes)
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>

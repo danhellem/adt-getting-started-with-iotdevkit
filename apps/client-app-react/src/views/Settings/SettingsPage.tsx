@@ -54,6 +54,7 @@ class SettingsPage extends React.Component<Props, ISettingsPage> {
                       fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
                       marginBottom: "3px",
                       textDecoration: "none",
+                      fontSize: "30px"
                     }}
                   >
                     Settings

@@ -14,6 +14,7 @@ import CardIcon from "../../components/Card/CardIcon";
 import Button from "../../components/CustomButtons/Button.js";
 
 import { DigitalTwinsUpdateResponse } from "@azure/digital-twins-core";
+import { ITwinDisplay } from "../../interfaces/ITwin";
 
 interface Props {}
 
@@ -37,7 +38,7 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
     this.setState({ showModal: false });
   };
 
-  public handleShowModal = (twin: ITwin) => {
+  public handleShowModal = (twin: ITwinDisplay) => {
     this.setState({
       twinId: twin.name,
       modalName: twin.display.name,
@@ -92,7 +93,7 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
         const index: number = this.state.data.findIndex(
           (e) => e.name === this.state.twinId
         );
-        let newArray: ITwin[] = [...this.state.data];
+        let newArray: ITwinDisplay[] = [...this.state.data];
         newArray[index] = {
           ...newArray[index],
           display: {
@@ -153,14 +154,13 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
       "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:floor;1') OR IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')"
     );
 
-    var twinData: ITwin[] = twinResult.map((x) => {
-      let twin: ITwin = {
+    var twinData: ITwinDisplay[] = twinResult.map((x) => {
+      let twin: ITwinDisplay = {
         name: x.$dtId,
         model: x.$metadata.$model,
         temperature: Math.round(x.temperature),
         humidity: Math.round(x.humidity),
-        lastUpdated: x.$metadata.humidity.lastUpdateTime,
-        warning: false,
+        lastUpdated: x.$metadata.humidity.lastUpdateTime,       
         display: {
           name: x.$dtId,
           order: 0,
@@ -187,8 +187,7 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
       <div>
         <div className="content">
           <div>
-            <Container fluid>
-            
+            <Container fluid>            
               <Row>
                 <Col md={1} lg={1} sm={2}>
                   <div>
@@ -428,7 +427,7 @@ export default FloorsAndRoomsPage;
 
 export interface IFloorsAndRoomsPage {
   message: string;
-  data: ITwin[]; 
+  data: ITwinDisplay[]; 
   twinId: string;
   showModal: boolean;
   modalName: string;
@@ -436,6 +435,7 @@ export interface IFloorsAndRoomsPage {
   modalIcon: ValueType<any, boolean>;
   modalOrder: number;
 }
+
 export interface IDisplay {
   name: string;
   order: number;
@@ -443,12 +443,4 @@ export interface IDisplay {
   color: string;
 }
 
-export interface ITwin {
-  name: string;
-  model: string;
-  temperature: number;
-  humidity: number;
-  warning: boolean;
-  display: IDisplay;
-  lastUpdated: Date;
-}
+

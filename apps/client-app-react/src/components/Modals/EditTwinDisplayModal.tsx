@@ -2,7 +2,7 @@ import React from "react";
 
 import { Modal, Button, Row, Col, FormGroup } from "react-bootstrap";
 import { Container } from "react-grid-system";
-import { ITwin } from "../../views/FloorsAndRooms/FloorsAndRoomsPage";
+import { ITwinDisplay } from "../../interfaces/ITwin";
 
 export class EditTwinDisplayModal extends React.Component<IModalProps, {}> {
   static defaultProps: Partial<IModalProps> = {};
@@ -145,7 +145,7 @@ interface IModalProps {
   open: boolean;
   setHideModal: () => void;
   name: string;
-  twin: ITwin;
+  twin: ITwinDisplay;
 }
 
 interface IEditTwinDisplayModal {

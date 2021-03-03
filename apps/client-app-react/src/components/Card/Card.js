@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 export default function Card(props) {
   const classes = useStyles();
-  const { className, children, plain, profile, chart, ...rest } = props;
+  const { className, children, plain, profile, chart, style, ...rest } = props;
   const cardClasses = classNames({
     [classes.card]: true,
     [classes.cardPlain]: plain,
@@ -23,7 +23,7 @@ export default function Card(props) {
     [className]: className !== undefined
   });
   return (
-    <div className={cardClasses} {...rest}>
+    <div className={cardClasses} {...rest} style={style}>
       {children}
     </div>
   );
@@ -34,5 +34,6 @@ Card.propTypes = {
   plain: PropTypes.bool,
   profile: PropTypes.bool,
   chart: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
+  style: React.CssProperties | undefined
 };
