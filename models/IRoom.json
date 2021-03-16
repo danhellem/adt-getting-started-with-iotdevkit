@@ -23,7 +23,7 @@
     {
       "@type": "Relationship",
       "@id": "dtmi:com:hellem:dtsample:room:rel_has_sensors;1",
-      "name": "rel_has_envsensors",
+      "name": "rel_has_sensors",
       "displayName": "Room has sensors",
       "target": "dtmi:com:hellem:dtsample:sensor;1"
     }
