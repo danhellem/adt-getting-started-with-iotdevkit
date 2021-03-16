@@ -52,7 +52,7 @@
         "@type": "Relationship",
         "@id": "dtmi:com:hellem:dtsample:floor:rel_has_rooms;1",
         "name": "rel_has_rooms",
-        "displayName": "Floor Has Rooms",
+        "displayName": "Floors have rooms",
         "target": "dtmi:com:hellem:dtsample:room;1"
       }      
     ]

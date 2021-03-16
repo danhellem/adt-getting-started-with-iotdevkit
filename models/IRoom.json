@@ -50,10 +50,10 @@
     },  
     {
       "@type": "Relationship",
-      "@id": "dtmi:com:hellem:dtsample:room:rel_has_envsensors;1",
-      "name": "rel_has_envsensors",
-      "displayName": "Room Has Env Sensors",
-      "target": "dtmi:com:hellem:dtsample:envsensor;1"
+      "@id": "dtmi:com:hellem:dtsample:room:rel_has_sensors;1",
+      "name": "rel_has_sensors",
+      "displayName": "Rooms have sensors",
+      "target": "dtmi:com:hellem:dtsample:sensor;1"
     }
   ]
 }

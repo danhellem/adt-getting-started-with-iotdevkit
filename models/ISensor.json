@@ -1,8 +1,8 @@
 {
-  "@id": "dtmi:com:hellem:dtsample:envsensor;1",
+  "@id": "dtmi:com:hellem:dtsample:sensor;1",
   "@type": "Interface",
   "@context": "dtmi:dtdl:context;2",
-  "displayName": "Env Sensor",
+  "displayName": "Sensor",
   "contents": [
     {
       "@type": ["Property", "Temperature"],
