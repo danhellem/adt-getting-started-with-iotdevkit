@@ -7,14 +7,13 @@
     {
       "@type": "Property",
       "name": "id",
-      "schema": "string",
-      "writable": true
+      "schema": "string"      
     },    
     {
       "@type": "Relationship",
       "@id": "dtmi:com:hellem:dtsample:home:rel_has_floors;1",
       "name": "rel_has_floors",
-      "displayName": "Home Has Floors",
+      "displayName": "Home has floors",
       "target": "dtmi:com:hellem:dtsample:floor;1"
     }
   ]
