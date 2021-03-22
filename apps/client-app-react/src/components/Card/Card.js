@@ -35,5 +35,5 @@ Card.propTypes = {
   profile: PropTypes.bool,
   chart: PropTypes.bool,
   children: PropTypes.node,
-  style: React.CssProperties | undefined
+  style: PropTypes.any
 };
