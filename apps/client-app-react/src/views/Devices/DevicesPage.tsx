@@ -29,14 +29,26 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
 
     this.listDevices();   
   };
+
+  // function to check and compare the dates
+  // used to check and see if lastUpdated has not been updated in 20 minutes, then highligh the device with a red style 
+  private dateCheck = (date: Date, minutes: number = 20) : boolean => {
+    let today = new Date();
+    let myDate = new Date(date);
+
+    var diff = today.getTime() - myDate.getTime();
+    var minsDiff = Math.floor(diff / (1000 * 60));
+  
+    if (minsDiff > minutes) return true;
+
+    return false;
+  }
   
   private async listDevices() {
     const api = new ApiService();
     const twinResult = await api.queryTwins(
       "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:envsensor;1')"
-    );
-
-    console.log(twinResult);
+    );    
 
     var twinData: ITwinCore[] = twinResult.map((x) => {
       let twin: ITwinCore = {
@@ -79,7 +91,7 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
               <Row>
                 {this.state.data.map((x, key) => (
                   <Col md={4} lg={3} sm={8} key={key}>
-                    <Card>
+                    <Card style={ this.dateCheck(x.lastUpdated, 20) ? {backgroundColor: '#ffcccc'} : {}}>
                       <CardHeader color="success" stats icon>
                         <CardIcon color="success">
                           <Icon>thermostat</Icon>

@@ -89,14 +89,7 @@ class SettingsPage extends React.Component<Props, ISettingsPage> {
                     color="primary"
                     onClick={(e: React.FormEvent<HTMLButtonElement>) => this.handleSaveButtonClick(e)} 
                   >
-                  Save
-                </Button>
-                  &nbsp;
-                  <Button                  
-                    color="info"
-                    onClick={(e: React.FormEvent<HTMLButtonElement>) => this.handleTestButtonClick(e)} 
-                  >
-                  Test Connection
+                  Save                
                 </Button>
                 </CardFooter>
               </Card>
