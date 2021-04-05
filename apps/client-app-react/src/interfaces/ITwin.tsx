@@ -1,4 +1,4 @@
-import { IDisplay } from "../views/FloorsAndRooms/FloorsAndRoomsPage";
+import { IDisplay } from "../views/MyHouse/MyHouse"
 
 export interface ITwinCore {
   name: string;

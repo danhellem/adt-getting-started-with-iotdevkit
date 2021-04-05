@@ -47,7 +47,7 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
   private async listDevices() {
     const api = new ApiService();
     const twinResult = await api.queryTwins(
-      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:envsensor;1')"
+      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:sensor;1')"
     );    
 
     var twinData: ITwinCore[] = twinResult.map((x) => {
@@ -72,9 +72,9 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
           <div>
             <Container fluid>            
               <Row>
-                <Col md={1} lg={1} sm={2}>
+                <Col md={1} lg={2} sm={2}>
                   <div>
-                  <h2>Devices</h2>
+                  <h2>Active Devices</h2>
                   </div>
                 </Col>
                 <Col md={1} lg={1} sm={2}> 
@@ -91,10 +91,10 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
               <Row>
                 {this.state.data.map((x, key) => (
                   <Col md={4} lg={3} sm={8} key={key}>
-                    <Card style={ this.dateCheck(x.lastUpdated, 20) ? {backgroundColor: '#ffcccc'} : {}}>
+                    <Card>
                       <CardHeader color="success" stats icon>
-                        <CardIcon color="success">
-                          <Icon>thermostat</Icon>
+                        <CardIcon color={ this.dateCheck(x.lastUpdated, 20) ? "danger" : "success"}>
+                          <Icon>{ this.dateCheck(x.lastUpdated, 20) ? "warning" : "thermostat"}</Icon>
                         </CardIcon>
                         <h1
                           style={{
@@ -127,7 +127,7 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
                       </CardHeader>
                       <CardFooter stats>
                         <div>
-                          <span style={{ fontSize: 13 }}>
+                          <span style={ this.dateCheck(x.lastUpdated, 20) ? {fontSize: 13, fontWeight: "bold", color: "red"} : {fontSize: 13}}>
                             {datetimeFormatter(x.lastUpdated)}
                           </span>
                         </div>                        
@@ -135,8 +135,7 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
                     </Card>
                   </Col>
                 ))}
-              </Row>
-              
+              </Row>             
             
             </Container>
           </div>

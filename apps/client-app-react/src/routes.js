@@ -23,7 +23,7 @@ import DeviceIcon from "@material-ui/icons/Devices";
 
 // core components/views for Admin layout
 import DashboardPage from "./views/Dashboard/DashboardPage";
-import FloorsAndRoomsPage from "./views/FloorsAndRooms/FloorsAndRoomsPage";
+import MyHousePage from "./views/MyHouse/MyHouse"
 import DevicesPage from "./views/Devices/DevicesPage";
 import SettingsPage from "./views/Settings/SettingsPage";
 
@@ -37,9 +37,9 @@ const dashboardRoutes = [
   },
   {
     path: "/location",
-    name: "Floors and Rooms",  
+    name: "My House",  
     icon: FloorsIcon,
-    component: FloorsAndRoomsPage,
+    component: MyHousePage,
     layout: "/admin"
   }, 
   {
