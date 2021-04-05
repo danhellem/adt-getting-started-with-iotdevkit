@@ -18,8 +18,8 @@ import { ITwinDisplay } from "../../interfaces/ITwin";
 
 interface Props {}
 
-class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
-  state: IFloorsAndRoomsPage = {
+class MyHousePage extends React.Component<Props, IMyHousePage> {
+  state: IMyHousePage = {
     message: "",
     data: [],   
     showModal: false,
@@ -135,14 +135,14 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
     ) {
       this.setState(({
         [e.currentTarget.name]: e.currentTarget.value,
-      } as unknown) as Pick<IFloorsAndRoomsPage, keyof IFloorsAndRoomsPage>);
+      } as unknown) as Pick<IMyHousePage, keyof IMyHousePage>);
     } else {
       this.setState(({
         [e.currentTarget.name]:
           e.currentTarget.type === "number"
             ? parseInt(e.currentTarget.value)
             : e.currentTarget.value,
-      } as unknown) as Pick<IFloorsAndRoomsPage, keyof IFloorsAndRoomsPage>);
+      } as unknown) as Pick<IMyHousePage, keyof IMyHousePage>);
     }
 
     //this.validateForm();
@@ -423,9 +423,9 @@ class FloorsAndRoomsPage extends React.Component<Props, IFloorsAndRoomsPage> {
   }
 }
 
-export default FloorsAndRoomsPage;
+export default MyHousePage;
 
-export interface IFloorsAndRoomsPage {
+export interface IMyHousePage {
   message: string;
   data: ITwinDisplay[]; 
   twinId: string;
