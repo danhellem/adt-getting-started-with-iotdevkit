@@ -88,6 +88,16 @@ export class ApiService {
     return await this.queryTwins(getAllTwinsQuery);
   }
 
+  async getCountByQuery(query) {
+    const list = [];
+
+    // there should be a better way to do a SELECT COUNT(), but having trouble getting 
+    // it to work as the results look different than a regular query
+    await this.queryTwinsPaged(query, items => items.forEach(x => list.push(x)));
+
+    return list.length;  // for not just returning the length
+  }  
+
   async queryTwins(query) {
     const list = [];
     await this.queryTwinsPaged(query, items => items.forEach(x => list.push(x)));

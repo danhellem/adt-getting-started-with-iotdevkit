@@ -9,29 +9,38 @@ import CardFooter from "../../components/Card/CardFooter";
 import CardIcon from "../../components/Card/CardIcon";
 
 import { ApiService } from "../../services/ApiService";
+import { Link, Route } from "react-router-dom";
+import DevicesPage from "../Devices/DevicesPage";
 
 interface Props {}
 
 class DashboardPage extends React.Component<Props, IDashboardPage> {
   state: IDashboardPage = {
     message: "",
+    rooms: 0,
+    sensors: 0
   };
 
   componentDidMount() {
-    this.listTwins();
+    this.getTwinsCount();
   }
 
   private handleRefreshPage = () => {
-    this.listTwins();
+    this.getTwinsCount();
   };
 
-  private async listTwins() {
+  private async getTwinsCount() {
     const api = new ApiService();
-    const twinResult = await api.queryTwins(
-      "SELECT COUNT() FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')"
+    const roomCount = await api.getCountByQuery(
+      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:room;1')"
     );
 
-    console.log(twinResult);
+    const sensorCount = await api.getCountByQuery(
+      "SELECT * FROM digitaltwins WHERE IS_OF_MODEL('dtmi:com:hellem:dtsample:sensor;1')"
+    );
+
+    this.setState({ sensors: sensorCount, rooms: roomCount });
+    
   }
 
   render() {
@@ -93,12 +102,14 @@ class DashboardPage extends React.Component<Props, IDashboardPage> {
                           textDecoration: "none",
                         }}
                       >                       
-                        5
+                        {this.state.rooms}
                       </h3>
                     </CardHeader>
                     <CardFooter stats>
                       <div>
-                        <span style={{ fontSize: 13 }}>Hello</span>
+                      <Link to="/admin/location">
+                          <span style={{ fontSize: 13 }}> <Icon>house</Icon>view your rooms and floors</span>                           
+                        </Link>
                       </div>
                     </CardFooter>
                   </Card>
@@ -132,12 +143,14 @@ class DashboardPage extends React.Component<Props, IDashboardPage> {
                           textDecoration: "none",
                         }}
                       >                       
-                        3
+                        {this.state.sensors}
                       </h3>
                     </CardHeader>
                     <CardFooter stats>
-                      <div>
-                        <span style={{ fontSize: 13 }}>Hello</span>
+                      <div>                        
+                        <Link to="/admin/devices">
+                          <span style={{ fontSize: 13 }}><Icon>thermostat</Icon>view details of your sensors</span>                           
+                        </Link>                       
                       </div>
                     </CardFooter>
                   </Card>
@@ -155,4 +168,6 @@ export default DashboardPage;
 
 export interface IDashboardPage {
   message: string;
+  rooms: number;
+  sensors: number;
 }
