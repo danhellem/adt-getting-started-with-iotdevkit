@@ -32,8 +32,24 @@ export const icons = [
     label: "house_siding",
   },
   {
-    value: "night_shelter",
-    label: "night_shelter",
+    value: "info_outline",
+    label: "info_outline",
+  },
+  {
+    value: "garage",
+    label: "garage",
+  },
+  {
+    value: "bed",
+    label: "bed",
+  },
+  {
+    value: "living",
+    label: "living",
+  },
+  {
+    value: "door_front",
+    label: "door_front",
   },
   {
     value: "gite",

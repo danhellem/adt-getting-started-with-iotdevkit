@@ -74,7 +74,7 @@ class DevicesPage extends React.Component<Props, IDevicesPage> {
               <Row>
                 <Col md={1} lg={2} sm={2}>
                   <div>
-                  <h2>Active Devices</h2>
+                  <h2>Devices</h2>
                   </div>
                 </Col>
                 <Col md={1} lg={1} sm={2}> 
