@@ -9,8 +9,7 @@ import CardFooter from "../../components/Card/CardFooter";
 import CardIcon from "../../components/Card/CardIcon";
 
 import { ApiService } from "../../services/ApiService";
-import { Link, Route } from "react-router-dom";
-import DevicesPage from "../Devices/DevicesPage";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
