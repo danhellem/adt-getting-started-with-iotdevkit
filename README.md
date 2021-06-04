@@ -35,8 +35,63 @@ There are multiple pieces that you need to put into place. These include:
 
 If you don't have any physical devices, you can simulate the sensor data using the `env-sensor.js` file. Detailed instructions can be found in the [simulated-client folder](./simulated-client).
 
+Once you setup your devices, you should see telemetry data start flowing into IoT Hub almost immediately. To see the telemetry messages you can run the follow command in [Azure Cloud Shell](https://shell.azure.com/).
+
+```
+az iot hub monitor-events -n <IoT-hub-name> -t 0
+```
+
 ### 3. Create an Azure Digital Twins instance
 
 [Set up an Azure Digital Twins instance and authentication (portal)](https://docs.microsoft.com/en-us/azure/digital-twins/how-to-set-up-instance-portal)
 
 ### 4. Import models into your Azure Digital Twins instance
+
+Using [Azure Digital Twins Explorer](https://docs.microsoft.com/en-us/azure/digital-twins/quickstart-azure-digital-twins-explorer) import the modles location in the [models](./models) folder.
+
+Once you import, your model graph should look like this:
+
+![screen shot of models in azure digital twins explorer](./media/models.1.png)
+
+### 5. Create twins graph
+
+Now that we have our models imported into the Azure Digital Twins instance, we need to create a twin graph the represents our home. You will need to create twins for your Home, Floors, Rooms and Sensors. 
+
+Again, use [Azure Digital Twins Explorer](https://docs.microsoft.com/en-us/azure/digital-twins/quickstart-azure-digital-twins-explorer) to create the twins and relationships.
+
+Here is an example:
+
+![screen shot of home graph in azure digital twins explorer](./media/graph.1.png)
+
+> It is important to note that the sensor names shoud match the names of the sensors you registered in IoT Hub. If the names do not match, the telemetry values cannot flow into your digital twins.
+
+### 6. Publish Azure Function
+
+In order to get the data from IoT Hub into Azure Digital Twins, we need to use an Azure Function. We also have a secondary function that is used to update average temperatures for a Floor.
+
+Using the functions in this repo, follow the instructions to [Publish the function app to Azure](https://docs.microsoft.com/azure/digital-twins/how-to-create-azure-function?tabs=cli#publish-the-function-app-to-azure) as well as [setting up security access](https://docs.microsoft.com/en-us/azure/digital-twins/how-to-create-azure-function?tabs=cli#set-up-security-access-for-the-function-app).
+
+Once you have completed the steps, you should the Azure Function in the Portal with the two function names.
+
+![screen shot of home graph in azure digital twins explorer](./media/azure-functions.1.png)
+
+At this point you should start seeing data flowing from IoT Hub into your digital twins. Again, you can use a CLI command to monitor the functions activity.
+
+```
+az webapp log tail –name <function-name> --resource-group <resource-group-name>
+```
+
+### 7. Run react-app 
+
+Now that the telemetry from the devices are updating your digital twins, we can run our client app built on top of the Azure Digital Twins platform.
+
+```
+cd apps\client-app-rect
+```
+
+```
+npm install
+npm start
+```
+
+
